@@ -1,1 +1,1 @@
-details will be added sooin
+coming soon
