@@ -35,7 +35,6 @@ Then go to `http://localhost:8000`
 
 ## Controls
 
-- **Left click**: Fire pulse from particle
 - **Ctrl / Right click + Drag**: Move/Rotate the whole scene
 - **Mouse drag**: Rotate camera
 - **Scroll**: Zoom
