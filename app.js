@@ -41,7 +41,17 @@ function generateTextPoints(text, count) {
   ctx.fillRect(0, 0, size, size);
 
   ctx.fillStyle = 'white';
-  ctx.font = `bold ${size * 0.6}px Impact, Arial Black`;
+
+  // Auto-fit text size based on length
+  let fontSize = size * 0.6;
+  ctx.font = `bold ${fontSize}px Impact, Arial Black`;
+  let textWidth = ctx.measureText(text.toUpperCase()).width;
+
+  if (textWidth > size * 0.9) {
+    fontSize = fontSize * ((size * 0.9) / textWidth);
+    ctx.font = `bold ${fontSize}px Impact, Arial Black`;
+  }
+
   ctx.textAlign = 'center';
   ctx.textBaseline = 'middle';
   ctx.fillText(text.toUpperCase(), size / 2, size / 2);
@@ -56,7 +66,7 @@ function generateTextPoints(text, count) {
         pixels.push({
           x: (x - size / 2) * 1.5,
           y: -(y - size / 2) * 1.5,
-          z: 0
+          z: (Math.random() - 0.5) * 60 // Add thickness so it's 3D
         });
       }
     }
@@ -64,6 +74,12 @@ function generateTextPoints(text, count) {
 
   if (pixels.length === 0) {
     return [{ x: 0, y: 0, z: 0 }];
+  }
+
+  // Fisher-Yates shuffle to distribute particles randomly across the text
+  for (let i = pixels.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [pixels[i], pixels[j]] = [pixels[j], pixels[i]];
   }
 
   return pixels;
@@ -276,7 +292,7 @@ function setupTweakpane() {
   atmosphere.addInput(config, 'rainbowMode', { label: 'Rainbow Colors' });
 
   const geometry = pane.addFolder({ title: 'Geometry', expanded: true });
-  geometry.addInput(config, 'shape', {
+  const shapeInput = geometry.addInput(config, 'shape', {
     options: {
       'Cloud': 'Cloud',
       'Sphere': 'Sphere',
@@ -286,16 +302,24 @@ function setupTweakpane() {
       'Spiral': 'Spiral',
       'Heart': 'Heart',
       'Star': 'Star',
-      'Infinity': 'Infinity'
+      'Infinity': 'Infinity',
+      'Custom Text': 'Text'
     }
   }).on('change', updateMorphTargets);
 
   geometry.addInput(config, 'customText', { label: 'Custom Text' })
     .on('change', () => {
-      if (config.shape === 'Text') {
-        textPoints = [];
-        updateMorphTargets();
-      }
+      config.shape = 'Text';
+      shapeInput.refresh();
+      textPoints = [];
+      updateMorphTargets();
+
+      // Auto-fix for readability: Stop spinning and face front
+      config.autoRotate = false;
+      controls.autoRotate = false;
+      camera.position.set(0, 0, 800);
+      camera.lookAt(0, 0, 0);
+      pane.refresh(); // Refresh all UI to show rotation is off
     });
 
   geometry.addInput(config, 'count', { min: 50, max: 500, step: 10, label: 'Node Count' })
@@ -515,7 +539,7 @@ function animate() {
       p.pos.x += (Math.random() - 0.5) * 8;
       p.pos.y += (Math.random() - 0.5) * 8;
       p.pos.z += (Math.random() - 0.5) * 8;
-    } else if (config.shape !== 'Text') {
+    } else {
       p.pos.add(p.vel);
       p.vel.multiplyScalar(0.98);
     }
@@ -594,9 +618,15 @@ function animate() {
       }
     });
   });
-  connectionSystem.geometry.attributes.position.needsUpdate = true;
-  if (config.connectionPulse) {
-    connectionSystem.geometry.attributes.color.needsUpdate = true;
+  // Auto-hide connections for text because they make it messy
+  if (config.shape === 'Custom Text' || config.shape === 'Text') {
+    connectionSystem.visible = false;
+  } else {
+    connectionSystem.visible = true;
+    connectionSystem.geometry.attributes.position.needsUpdate = true;
+    if (config.connectionPulse) {
+      connectionSystem.geometry.attributes.color.needsUpdate = true;
+    }
   }
 
   controls.update();
