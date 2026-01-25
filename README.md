@@ -4,7 +4,7 @@
 
 An interactive 3D particle visualization that morphs between different shapes and responds to your interactions in real-time.
 
-![Morpheus](readme.png)
+![Morpheus](homepage.gif)
 
 Built with Three.js, this lets you play with particles that can form spheres, cubes, DNA helixes, hearts, and even custom text - all while reacting to audio and creating mesmerizing visual effects.
 
