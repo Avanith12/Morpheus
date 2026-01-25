@@ -2,28 +2,175 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Morpheus</title>
-  <link rel="stylesheet" href="style.css">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Outfit:wght@300;600&display=swap"
-    rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Morpheus</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Outfit:wght@500&display=swap"
+        rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #000;
+            color: #fff;
+            font-family: 'Inter', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
 
-  <!-- Global Libraries (Compatible with file://) -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/EffectComposer.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/RenderPass.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/ShaderPass.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/UnrealBloomPass.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/shaders/CopyShader.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/shaders/LuminosityHighPassShader.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/tweakpane@3.0.7/dist/tweakpane.min.js"></script>
+        .container {
+            max-width: 900px;
+            width: 100%;
+            padding: 60px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        header {
+            margin-bottom: 40px;
+        }
+
+        h1 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 500;
+            letter-spacing: 4px;
+            color: #fff;
+            margin: 0;
+            text-transform: uppercase;
+        }
+
+        .hero-image-container {
+            width: 100%;
+            max-width: 900px;
+            margin-bottom: 20px;
+            /* Create a seamless blend with the background */
+            -webkit-mask-image: radial-gradient(circle at center, black 30%, transparent 100%);
+            mask-image: radial-gradient(circle at center, black 30%, transparent 100%);
+        }
+
+        .hero-image {
+            width: 100%;
+            display: block;
+            filter: grayscale(100%) contrast(1.2);
+            transition: filter 0.8s ease;
+            object-fit: cover;
+        }
+
+        .hero-image:hover {
+            filter: grayscale(0%) contrast(1);
+        }
+
+        .content {
+            max-width: 600px;
+        }
+
+        h2 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 500;
+            margin-bottom: 20px;
+            color: #eee;
+        }
+
+        p {
+            font-size: 1rem;
+            line-height: 1.6;
+            color: #aaa;
+            margin-bottom: 30px;
+        }
+
+        .features {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin: 40px 0;
+            border-top: 1px solid #222;
+            border-bottom: 1px solid #222;
+            padding: 20px 0;
+        }
+
+        .feature-item h3 {
+            font-size: 0.9rem;
+            font-weight: 400;
+            margin: 0;
+            color: #fff;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 15px 40px;
+            background: #fff;
+            color: #000;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            text-decoration: none;
+            border: 1px solid #fff;
+            letter-spacing: 2px;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+        }
+
+        .cta-button:hover {
+            background: #000;
+            color: #fff;
+        }
+
+        footer {
+            margin-top: auto;
+            padding: 40px;
+            font-size: 0.8rem;
+            color: #444;
+            text-align: center;
+        }
+    </style>
 </head>
 
 <body>
-  <div id="canvas-container"></div>
-  <script src="app.js"></script>
+
+    <div class="container">
+        <header>
+            <h1>Morpheus</h1>
+        </header>
+
+        <div class="hero-image-container">
+            <img src="homepage.gif" alt="Morpheus Visualization" class="hero-image">
+        </div>
+
+        <div class="content">
+            <h2>Experience the unseen.</h2>
+            <p>
+                A minimal 3D particle network visualizing the connection between sound and geometry.
+                Watch thousands of particles morph, pulse, and react in real-time.
+            </p>
+
+            <div class="features">
+                <div class="feature-item">
+                    <h3>Audio Reactive</h3>
+                </div>
+                <div class="feature-item">
+                    <h3>Morphing Shapes</h3>
+                </div>
+                <div class="feature-item">
+                    <h3>Interactive</h3>
+                </div>
+            </div>
+
+            <a href="app.html" class="cta-button">Enter Experience</a>
+        </div>
+    </div>
+
+    <footer>
+        <p>Built with Three.js • Designed by Avanith</p>
+    </footer>
+
 </body>
 
 </html>
