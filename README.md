@@ -61,4 +61,4 @@ Made with Three.js. No frameworks, no build process, just pure JavaScript.
 
 MIT Licensed.
 
-adding the cover image
+
