@@ -60,3 +60,5 @@ Click a particle and it fires a pulse that propagates through connected particle
 Made with Three.js. No frameworks, no build process, just pure JavaScript.
 
 MIT Licensed.
+
+adding the cover image
